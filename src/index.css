@@ -1,0 +1,60 @@
+/* index.css - Base styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8;
+  min-height: 100vh;
+}
+
+/* Original styles preserved for other components */
+.container { 
+  max-width: 400px; 
+  margin: 80px auto; 
+  padding: 20px; 
+  background: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+}
+
+input { 
+  width: 100%; 
+  padding: 8px; 
+  margin-bottom: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+}
+
+button { 
+  width: 100%; 
+  padding: 10px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+}
+
+button:hover { 
+  background-color: #0056b3; 
+}
+
+.invalid { 
+  color: #d9534f; 
+}
+
+.details { 
+  margin-top: 20px; 
+}
+
+.details h2 { 
+  color: #28a745; 
+}
+
+/* Make sure all certificate displays are centered */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Certificate styles should be in Certificate.css */

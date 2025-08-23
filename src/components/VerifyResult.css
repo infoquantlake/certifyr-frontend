@@ -1,0 +1,88 @@
+/* VerifyResult.css */
+.certificate-wrapper {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+}
+
+.certificate-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+.certificate-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+}
+
+.invalid::before {
+  background: linear-gradient(90deg, #f43b47, #ff9a8b);
+}
+
+.certificate-header {
+  padding: 30px;
+  text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.certificate-header h1 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.certificate-header p {
+  color: #4a5568;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.invalid-header h1 {
+  color: #e53e3e;
+}
+
+.certificate-body {
+  padding: 30px;
+}
+
+.status-badge {
+  background: #e8f5fe;
+  border-radius: 50px;
+  color: #0078d4;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px 16px;
+  margin-bottom: 20px;
+}
+
+.status-badge svg {
+  margin-right: 8px;
+}
+
+.invalid-badge {
+  background: #feeaea;
+  color: #e53e3e;
+}
+
+.invalid-message {
+  text-align: center;
+  font-size: 18px;
+  color: #e53e3e;
+  padding: 20px 0;
+}
