@@ -27,12 +27,13 @@ body {
 }
 
 .certificate-header {
-  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  background: linear-gradient(135deg, #66BB6A, #AED581); /* lighter green gradient */
   color: white;
   padding: 30px 20px;
   text-align: center;
   position: relative;
 }
+
 
 .invalid-header {
   background: linear-gradient(135deg, #f44336, #ff9800);

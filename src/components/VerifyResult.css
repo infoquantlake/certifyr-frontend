@@ -1,88 +1,646 @@
-/* VerifyResult.css */
-.certificate-wrapper {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
+/* =================== Animation Control =================== */
+:root {
+  --animation-state: running;
+}
+
+/* Pause all animations when page is hidden */
+.page-hidden * {
+  animation-play-state: paused !important;
+  transition-delay: 0s !important;
+  transition-duration: 0s !important;
+}
+
+.page-hidden [data-framer-motion] {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Resume animations when page is visible */
+.page-visible * {
+  animation-play-state: running;
+}
+
+/* =================== Navbar (Verify Page) =================== */
+.navbar {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: rgba(0,0,0,0.95);
+  border-bottom: 1px solid rgba(0,125,67,0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.logo-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 30px 20px;
 }
 
-.certificate-container {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.logo-image {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.logo-image:hover {
+  filter: drop-shadow(0 4px 12px rgba(0,125,67,0.5));
+  transform: scale(1.05);
+}
+
+.navbar nav a { 
+  margin: 0 15px; 
+  color: #ccc; 
+  font-weight: 500; 
+  text-decoration: none; 
+  transition: all 0.3s ease; 
   position: relative;
-  width: 100%;
-  max-width: 600px;
 }
 
-.certificate-container::before {
+.navbar nav a::after {
   content: "";
   position: absolute;
-  top: 0;
+  bottom: -5px;
   left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+  width: 0;
+  height: 2px;
+  background: #007d43;
+  transition: width 0.3s ease;
 }
 
-.invalid::before {
-  background: linear-gradient(90deg, #f43b47, #ff9a8b);
+.navbar nav a:hover { 
+  color: #007d43;
+  transform: translateY(-2px);
 }
 
-.certificate-header {
-  padding: 30px;
-  text-align: center;
-  border-bottom: 1px solid #e2e8f0;
+.navbar nav a:hover::after {
+  width: 100%;
+}
+/* =================== Loading =================== */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #666;
 }
 
-.certificate-header h1 {
-  color: #333;
-  font-size: 28px;
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #e2e8f0;
+  border-top: 6px solid #22c55e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  animation-play-state: var(--animation-state);
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* =================== Certificate Section =================== */
+.certificate-section {
+  padding: 30px 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  justify-content: center;
+  /* Add overflow handling */
+  overflow-x: hidden;
+  width: 100%;
+  /* Ensure minimum padding on all sides */
+  box-sizing: border-box;
+}
+
+.valid-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+  /* Ensure proper box sizing */
+  box-sizing: border-box;
+  /* Prevent overflow on smaller screens */
+  overflow: hidden;
+  /* Add consistent padding for all children */
+  padding: 0 10px;
+}
+
+/* Left Column */
+.certificate-column {
+  flex: 1 1 600px;
+  min-width: 0; /* Allow shrinking */
+  /* Add box sizing and overflow handling */
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* Right Column */
+.verification-column {
+  flex: 1 1 350px;
+  min-width: 0; /* Allow shrinking */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: stretch;
+  /* Add box sizing and overflow handling */
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* =================== Right Cards =================== */
+.right-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  padding: 20px;
+  font-size: 14px;
+  width: 100%;
+  /* Add box sizing */
+  box-sizing: border-box;
+  /* Add subtle entrance animation */
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.right-card h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
   font-weight: 700;
+  color: #333;
+}
+
+/* Certificate Verified Card */
+.certificate-verified-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.certificate-verified-card .seal-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  stroke: #007d43;
+  fill: none;
+  /* Add pulse animation for verification seal */
+  animation: sealPulse 2s ease-in-out infinite;
+  animation-play-state: var(--animation-state);
+}
+
+@keyframes sealPulse {
+  0%, 100% { 
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));
+  }
+  50% { 
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.5));
+  }
+}
+
+.certificate-verified-card .role {
+  font-weight: 600;
+  color: #4CAF50;
   margin-bottom: 10px;
 }
 
-.certificate-header p {
-  color: #4a5568;
-  font-size: 16px;
-  margin-top: 10px;
+.certificate-verified-card .award-text {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0;
 }
 
-.invalid-header h1 {
-  color: #e53e3e;
+.certificate-verified-card .recipient-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+  margin: 10px 0 15px 0; /* spacing above and below name */
+}
+
+.certificate-verified-card .certified-date {
+  color: #555;
+  font-size: 13px;
+}
+
+/* Verification Details Card */
+.verification-details-card {
+  text-align: left;
+}
+
+.verification-details-card .verification-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  /* Handle long text wrapping */
+  flex-wrap: wrap;
+  gap: 5px;
+  /* Add subtle fade-in animation */
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+
+.verification-details-card .label {
+  font-weight: 600;
+  color: #666;
+  /* Ensure minimum width */
+  min-width: fit-content;
+}
+
+.verification-details-card .value {
+  color: #333;
+  font-weight: 500;
+  text-align: right;
+  /* Allow text to wrap if needed */
+  word-break: break-word;
+  flex: 1;
+}
+
+/* =================== Invalid Certificate =================== */
+.certificate-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 30px 20px;
+  /* Add overflow handling */
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.certificate-container.invalid {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  /* Add box sizing */
+  box-sizing: border-box;
+  text-align: center;
+  /* Add shake animation for invalid certificates */
+  animation: invalidShake 0.5s ease-in-out;
+  animation-play-state: var(--animation-state);
+}
+
+@keyframes invalidShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.certificate-header.invalid-header {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  padding: 30px 20px 20px;
+  border-bottom: 1px solid #fecaca;
+}
+
+.certificate-header.invalid-header h1 {
+  color: #dc2626;
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.certificate-header.invalid-header p {
+  color: #991b1b;
+  margin: 0;
+  font-size: 16px;
 }
 
 .certificate-body {
-  padding: 30px;
-}
-
-.status-badge {
-  background: #e8f5fe;
-  border-radius: 50px;
-  color: #0078d4;
-  display: inline-flex;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 6px 16px;
-  margin-bottom: 20px;
-}
-
-.status-badge svg {
-  margin-right: 8px;
-}
-
-.invalid-badge {
-  background: #feeaea;
-  color: #e53e3e;
+  padding: 40px 30px;
 }
 
 .invalid-message {
-  text-align: center;
+  font-size: 20px;
+  color: #dc2626;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+.help-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border-left: 4px solid #007d43;
+}
+
+.help-section h3 {
+  color: #1f2937;
   font-size: 18px;
-  color: #e53e3e;
-  padding: 20px 0;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.help-section p {
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.help-section a {
+  color: #007d43;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.help-section a:hover {
+  color: #16a34a;
+  text-decoration: underline;
+}
+
+/* =================== Footer =================== */
+.footer {
+  background: #000;
+  text-align: center;
+  padding: 25px 10px;
+  font-size: 14px;
+  color: #666;
+  border-top: 1px solid rgba(34,197,94,0.15);
+}
+
+/* =================== About Certifyr =================== */
+.about-certifyr {
+  background: #1a1a1a;
+  color: #f0f0f0;
+  padding: 80px 20px;
+  width: 100%;
+}
+
+.about-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.about-content h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.about-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  flex: 1 1 400px;
+}
+
+.contact-info {
+  flex: 1 1 300px;
+  font-size: 14px;
+}
+
+.contact-info a {
+  color: #22c55e;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.contact-info a:hover {
+  color: #16a34a;
+  text-decoration: underline;
+}
+
+/* =================== Animation States =================== */
+/* Fade in animation for cards */
+.fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+  animation-play-state: var(--animation-state);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in animation for verification items */
+.slide-in {
+  animation: slideIn 0.4s ease-out forwards;
+  animation-play-state: var(--animation-state);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Success pulse animation */
+.success-pulse {
+  animation: successPulse 1.5s ease-in-out;
+  animation-play-state: var(--animation-state);
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  }
+}
+
+/* =================== Responsive =================== */
+/* Large tablet/laptop breakpoint - trigger earlier */
+@media (max-width: 1100px) {
+  .certificate-section {
+    padding: 20px 10px; /* Reduce outer padding since we have inner padding */
+    align-items: flex-start; /* Align to top instead of center */
+  }
+
+  .valid-layout {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 20px;
+    width: 100% !important;
+    max-width: none !important; /* Remove max-width constraint */
+    padding: 0 10px; /* Maintain consistent inner padding */
+  }
+
+  .certificate-column {
+    flex: none !important; /* Remove flex grow/shrink */
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    order: 1; /* Ensure proper order */
+  }
+
+  .verification-column {
+    flex: none !important; /* Remove flex grow/shrink */
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    align-items: stretch !important;
+    order: 2; /* Ensure it comes after certificate */
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  .verify-navbar {
+    padding: 0 20px;
+  }
+
+  .verify-navbar .logo-image {
+    height: 35px;
+  }
+
+  .verify-navbar nav a {
+    margin: 0 10px;
+    font-size: 14px;
+  }
+
+  .certificate-section {
+    padding: 15px 5px; /* Reduce outer padding */
+    min-height: auto; /* Remove min-height constraint */
+  }
+
+  .valid-layout {
+    gap: 15px;
+    padding: 0 10px; /* Maintain consistent inner padding */
+  }
+
+  .certificate-column,
+  .verification-column {
+    min-width: 0;
+    width: 100% !important;
+  }
+
+  .right-card {
+    margin-bottom: 0; /* Remove any potential margin issues */
+  }
+
+  .certificate-verified-card .seal-icon {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* Small mobile breakpoint */
+@media (max-width: 576px) {
+  .verify-navbar {
+    padding: 0 15px;
+  }
+
+  .verify-navbar .logo-image {
+    height: 30px;
+  }
+
+  .certificate-section {
+    padding: 12px 2px; /* Reduce outer padding */
+  }
+
+  .valid-layout {
+    gap: 10px;
+    padding: 0 10px; /* Maintain consistent inner padding */
+  }
+
+  .right-card {
+    font-size: 13px;
+    padding: 15px;
+  }
+
+  .certificate-verified-card h2,
+  .verification-details-card h2 {
+    font-size: 16px;
+  }
+
+  .certificate-verified-card {
+    gap: 8px;
+  }
+
+  .certificate-verified-card .recipient-name {
+    margin: 8px 0 12px 0;
+  }
+
+  .verification-details-card .verification-item {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .verification-details-card .value {
+    text-align: left;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .certificate-section {
+    padding: 10px 0px; /* Reduce outer padding */
+  }
+
+  .valid-layout {
+    padding: 0 10px; /* Maintain consistent inner padding */
+  }
+
+  .right-card {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .certificate-verified-card .seal-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .certificate-verified-card .recipient-name {
+    font-size: 1.1rem;
+  }
+}
+
+/* =================== Performance Optimization =================== */
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+  
+  .certificate-verified-card .seal-icon {
+    animation: none;
+  }
+}
+
+/* Force animations to pause when page is hidden (fallback) */
+.page-hidden {
+  --animation-state: paused;
 }
