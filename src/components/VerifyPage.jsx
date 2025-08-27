@@ -30,9 +30,6 @@ export default function VerifyPage() {
         </nav>
       </header>
 
-
-
-
       {/* Main Content */}
       <main className="main">
         <section id="verify-section" className="verify-section">
@@ -80,7 +77,6 @@ export default function VerifyPage() {
                 value={code}
                 onChange={(e)=>setCode(e.target.value)}
                 required
-                autoFocus
               />
             </div>
             <motion.button 
