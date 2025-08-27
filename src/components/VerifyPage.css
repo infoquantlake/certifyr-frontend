@@ -7,7 +7,7 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
 
-/* Page container */
+/* Page container - Fix for scrollable space */
 .verify-page {
   display: flex;
   flex-direction: column;
@@ -18,14 +18,15 @@
   overflow-x: hidden;
 }
 
-/* Enhanced animated background */
+/* Enhanced animated background - Fixed positioning */
 .verify-page::before {
   content: "";
-  position: fixed;
+  position: absolute; /* Changed from fixed to absolute */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  min-height: 100vh; /* Ensure it covers full viewport height */
   background: 
     radial-gradient(circle at 20% 80%, rgba(0,125,67,0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(0,125,67,0.1) 0%, transparent 50%),
@@ -49,11 +50,50 @@
   }
 }
 
+/* Global particle effect - moved to page level */
+.verify-page::after {
+  content: "";
+  position: fixed; /* Changed back to fixed for better visibility */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(3px 3px at 20px 30px, rgba(0,125,67,0.5), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(0,125,67,0.4), transparent),
+    radial-gradient(2px 2px at 90px 40px, rgba(0,125,67,0.6), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(0,200,100,0.7), transparent),
+    radial-gradient(2px 2px at 60px 20px, rgba(0,125,67,0.4), transparent),
+    radial-gradient(1px 1px at 110px 60px, rgba(0,200,100,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 170px 90px, rgba(0,200,100,0.4), transparent),
+    radial-gradient(2px 2px at 200px 50px, rgba(0,200,100,0.7), transparent);
+  background-repeat: repeat;
+  background-size: 200px 120px;
+  animation: sparkle 12s linear infinite;
+  z-index: 0; /* Changed from -1 to 0 */
+  pointer-events: none;
+}
+
+@keyframes sparkle {
+  0% { 
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; 
+    opacity: 1;
+  }
+  50% { 
+    background-position: 100px 60px, -100px -60px, 50px -30px, -50px 30px, 75px -45px, -75px 45px, 125px -75px, -125px 75px; 
+    opacity: 0.8;
+  }
+  100% { 
+    background-position: 200px 120px, -200px -120px, 100px -60px, -100px 60px, 150px -90px, -150px 90px, 250px -150px, -250px 150px; 
+    opacity: 1;
+  }
+}
+
 /* Main content expands to push footer down */
 .main {
   flex-grow: 1;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* Increased z-index to be above particles */
 }
 
 /* =================== Navbar (Verify Page) =================== */
@@ -75,6 +115,7 @@
 .logo-container {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .logo-image {
@@ -127,7 +168,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* Increased to be above particles */
 }
 
 .verify-section h1 { 
@@ -152,7 +193,6 @@
   max-width: 650px; 
   color: #aaa; 
   margin-bottom: 40px;
-  /* Removed CSS animation to prevent conflict with framer-motion */
 }
 
 @keyframes fadeInUp {
@@ -172,7 +212,6 @@
   gap: 20px; 
   width: 100%; 
   max-width: 500px;
-  /* Removed CSS animation to prevent conflict with framer-motion */
 }
 
 .form-group input { 
@@ -357,8 +396,7 @@
   color: #aaa;
 }
 
-
-/* Footer */
+/* Footer - Fixed to prevent extra space */
 .footer { 
   background: rgba(0,0,0,0.95); 
   text-align: center; 
@@ -366,17 +404,20 @@
   font-size: 14px; 
   color: #666; 
   border-top: 1px solid rgba(0,125,67,0.15); 
-  z-index: 1;
+  z-index: 10; /* Increased to be above particles */
   backdrop-filter: blur(10px);
+  margin-top: auto; /* This ensures footer sticks to bottom */
+  position: relative; /* Added for z-index to work */
 }
 
-/* Enhanced Background Shapes */
+/* Enhanced Background Shapes - Fixed positioning */
 .background-shapes {
-  position: fixed;
+  position: absolute; /* Changed from fixed to absolute */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  min-height: 100vh; /* Ensure it covers full viewport height */
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
@@ -386,7 +427,6 @@
   position: absolute;
   opacity: 0.15;
   border-radius: 50%;
-  /* Removed background from here to prevent color flash */
   animation: enhancedFloat 20s ease-in-out infinite;
   filter: blur(1px);
 }
@@ -484,30 +524,6 @@
     opacity: 0.1;
     background: linear-gradient(45deg, #00a055, #005530);
   }
-}
-
-/* Particle effect */
-.verify-section::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-image:
-    radial-gradient(2px 2px at 20px 30px, rgba(0,125,67,0.5), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(0,125,67,0.4), transparent),
-    radial-gradient(1px 1px at 90px 40px, rgba(0,125,67,0.6), transparent),
-    radial-gradient(1px 1px at 130px 80px, rgba(0,125,67,0.4), transparent),
-    radial-gradient(1.5px 1.5px at 60px 20px, rgba(0,125,67,0.45), transparent),
-    radial-gradient(1px 1px at 110px 60px, rgba(0,125,67,0.3), transparent);
-  background-repeat: repeat;
-  background-size: 150px 100px;
-  animation: sparkle 15s linear infinite;
-  z-index: -1;
-}
-
-@keyframes sparkle {
-  0% { background-position: 0 0, 0 0, 0 0, 0 0; }
-  100% { background-position: 150px 100px, -150px -100px, 75px -50px, -75px 50px; }
 }
 
 /* Responsive adjustments */
