@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./VerifyPage.css";
 import certifyrLogo from "../assets/certifyr.png";
-// import { Link, useNavigate } from "react-router-dom"; // add Link here
 
 
 export default function VerifyPage() {

@@ -86,7 +86,7 @@ function VerifyResult() {
               </div>
       
               <nav>
-                <a onClick={() => navigate("/search-certificate")}>Verify</a>
+                <a href="/search-certificate">Verify</a>
                 <a href="#about" onClick={(e) => { e.preventDefault(); handleScroll("about"); }}>About Us</a>
               </nav>
             </header>
